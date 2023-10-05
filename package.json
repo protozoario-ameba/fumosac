@@ -1,0 +1,11 @@
+{
+  "name": "Gilbert_System",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Gilbertin",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
