@@ -1,8 +1,8 @@
 
 const http = require("http")
 
-const exportsfromanother = require("./another")
-console.log({exportsfromanother})
+//const exportsfromanother = require("./another")
+//console.log({exportsfromanother})
 
 
 
