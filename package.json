@@ -5,7 +5,7 @@
   "author": "Gilbertin",
   "license": "MIT",
   "private": true,
-  "scripts":{git
+  "scripts":{
       "start": "node index.js"
   },
   "dependencies": {

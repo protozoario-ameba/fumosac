@@ -12,13 +12,17 @@ dotenv.config()
 const http = require("http")
 
 const fs = require("fs")
+
 //const exportsfromanother = require("./another")
 //console.log({exportsfromanother})
+
 
 function requirecontroller(req,res){
     const url = req.url
     const method = req.method
     console.log({url,method})
+
+
     if (method === "GET" && url === "/") {
         res.setHeader("Conten-type","text/html")
         fs.readFile("./public/index.html",function(err,file){
@@ -34,6 +38,7 @@ function requirecontroller(req,res){
     if (method === "GET" && url === "/about") {
         res.setHeader("Conten-type","text/html")
         fs.readFile("./public/about.html",function(err,file){
+            console.log({err})
             if(err){
                 console.log("Hubo un error")
             }
@@ -45,7 +50,8 @@ function requirecontroller(req,res){
     }
     res.setHeader("Conten-type","text/html; chart-set=utf-8")
     res.write("<h1>Pagina no encontrada</h1>")
-
+    res.end()
+    
 //    console.log("Aqui hay un nuevo pedido, que pasa, esto es nuevo")
 }
 
