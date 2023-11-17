@@ -1,15 +1,36 @@
+//const { json } = require("express")
+//const { json } = require("express")
+
 console.log("Este js va a ser procesado por el navegador")
 
-const button = document.querySelector("button")
+//const button = document.querySelector("button")
+const getbtn = document.querySelector("#get-task")
+const createbtn = document.querySelector("#create-task")
+const input = document.querySelector("#task-name")
 
-console.log({button})
+getbtn.addEventListener("click",function(){
+  console.log("Get tareas")
+  fetch("http://localhost:4000/api/task")
+})
+
+createbtn.addEventListener("click",function(){
+  console.log("CLICK !!")
+  console.log({input})
+  fetch("http://localhost:4000/api/task",{
+    method: 'POST',
+    headers: {"content-type":"Application/Json"},
+    body: JSON.stringify({text: input.value})
+
+  })
+})
+
+//console.log({button})
 
 // Desarrollar la funcionalidad a los botones
 
-button.addEventListener("click",function(){
-    fetch("http://localhost:4000/users")
-
-})
+//button.addEventListener("click",function(){
+//    fetch("http://localhost:4000/users")
+//})
 
 // Functions 
 // syntan and definitions ( paramters and arguments)
