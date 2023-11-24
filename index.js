@@ -4,6 +4,17 @@ dotenv.config()
 const express = require('express')
 const app = express()
 const port = process.env.PORT
+const mongoose = require('mongoose')
+
+
+// Conexion a la base de datos
+mongoose.connect(process.env.mongodb_url,(error)=>{
+  if (error){
+    console.log("Error al conectar a la base de datos")
+  }else{
+    console.log("Conectado a la base de datos")
+  }
+})
 
 // servir archivos estaticos
 
@@ -16,25 +27,25 @@ app.use(express.static('public'))
 // Middleware (preprocesamiento de request)
 // son siempre => funciones 
 // pasamos una funcion anonima 
-app.use((req,res,next)=>{
-  console.log("No especificamos como debe ser la ruta")
-  console.log("Middleware number one")
-  next()  
-})
+//app.use((req,res,next)=>{
+//  console.log("No especificamos como debe ser la ruta")
+//  console.log("Middleware number one")
+//  next()  
+//})
 
 // b) Pasamos una funcion retornada por otra funcion/metodo
-  const logger = {
-    logthis: (whattolog) => {
-      return(req,res,next) => {
-        console.log("Middleware 2:",whattolog)
-        next()
-      }
-    },
-  }
+//  const logger = {
+//    logthis: (whattolog) => {
+//      return(req,res,next) => {
+//        console.log("Middleware 2:",whattolog)
+//        next()
+//      }
+//    },
+//  }
 
-app.use(logger.logthis("Logueame estooooooooooo"))
+//app.use(logger.logthis("Logueame estooooooooooo"))
 
-// Middleware para parsear body de la request (como en el caso c)
+// Middleware para parsear body de la request (como en el caso c) 1
 
 
 app.post("/api/task",(req,res,next)=>{
