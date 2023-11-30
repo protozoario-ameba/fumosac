@@ -5,16 +5,29 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT
 const mongoose = require('mongoose')
+const schema = mongoose.Schema
+
 
 
 // Conexion a la base de datos
-mongoose.connect(process.env.mongodb_url,(error)=>{
-  if (error){
-    console.log("Error al conectar a la base de datos")
-  }else{
-    console.log("Conectado a la base de datos")
-  }
-})
+mongoose.connect(process.env.mongodb_url).then(()=>{
+    console.log("Conexion exitosa con la base da datos")
+  }).catch((err)=>{
+    console.log("hubo un error al conectarnos a la base de datos",{err})
+  })  
+
+const taskSchema = new schema({
+  name: String,
+  done: Boolean
+//  description: String,
+//  status: String
+})  
+
+const task = mongoose.model("task",taskSchema,"Tasks")
+
+
+
+// Middleware para parsear body de la request
 
 // servir archivos estaticos
 
@@ -48,11 +61,27 @@ app.use(express.static('public'))
 // Middleware para parsear body de la request (como en el caso c) 1
 
 
-app.post("/api/task",(req,res,next)=>{
+app.post("/api/task",(req,res)=>{
   const body = req.body
   console.log({body})
-  res.status(201).json({ok:true,message:"Tarea creada con exito"})
+  task.create({
+    name: body.text,
+    done: false
+  }).then((createtask)=>{
+    res.status(201).json({ok:true,message:"Tarea creada con exito",data:createtask})
+  }).catch((err)=>{
+    res.status(400).json({ok:false,message:"Error al crear la tarea"})
 })
+})
+
+
+
+
+
+
+
+
+  
 
 
 // configurar rutas

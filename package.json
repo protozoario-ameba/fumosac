@@ -1,12 +1,13 @@
 {
-  "name": "Gilbert_System",
+  "name": "gilbert_system",
   "version": "1.0.0",
   "main": "index.js",
   "author": "Gilbertin",
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "dotenv": "^16.3.1",
