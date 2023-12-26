@@ -77,13 +77,6 @@ app.post("/api/task",(req,res)=>{
 
 
 
-
-
-
-
-  
-
-
 // configurar rutas
 app.get('/', (req, res) => {
   res.send('Hello World!')
