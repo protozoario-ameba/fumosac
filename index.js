@@ -1,15 +1,15 @@
 const dotenv = require("dotenv")
 dotenv.config()
 
+
 const express = require('express')
 const app = express()
 const port = process.env.PORT
 const mongoose = require('mongoose')
-const schema = mongoose.Schema
+const schema = mongoose.Schema 
 
 
-
-// Conexion a la base de datos
+// Conexion a la base de datos 
 mongoose.connect(process.env.mongodb_url).then(()=>{
     console.log("Conexion exitosa con la base da datos")
   }).catch((err)=>{
@@ -28,9 +28,7 @@ const task = mongoose.model("task",taskSchema,"Tasks")
 
 
 // Middleware para parsear body de la request
-
 // servir archivos estaticos
-
 // Middleware de archivos staticos
 app.use(express.static('public'))
 
@@ -61,16 +59,22 @@ app.use(express.static('public'))
 // Middleware para parsear body de la request (como en el caso c) 1
 
 
-app.post("/api/task",(req,res)=>{
+//app.post("/api/task",(req,res)=>{
+  app.put("/api/task/:id",(req,res)=>{
   const body = req.body
-  console.log({body})
-  task.create({
+  const id= req.params.id
+  //console.log({body})
+//  task.create({
+    task.findByIdAndUpdate( id,{
     name: body.text,
-    done: false
-  }).then((createtask)=>{
-    res.status(201).json({ok:true,message:"Tarea creada con exito",data:createtask})
-  }).catch((err)=>{
-    res.status(400).json({ok:false,message:"Error al crear la tarea"})
+    //done: false
+  })
+  //.then((createtask)=>{
+    .then((updatetask)=>{
+    res.status(200).json({ok:true,message:"Tarea actualizada con exito",data:updatetask})
+  })
+    .catch((err)=>{
+    res.status(400).json({ok:false,message:"Error al editar la tarea"})
 })
 })
 
@@ -78,6 +82,25 @@ app.post("/api/task",(req,res)=>{
 
 
 // configurar rutas
+// controlar la peticion de encontrar, traer, conseguir
+app.get('/api/task', function(req, res) {
+  task.find().then((tasks)=>{
+    res.status(200).json({ok:true,data:tasks})
+  }).catch((err)=>{
+    res.status(400).json({ok:false,message:"Hubo un problema al obtener las tareas"})
+  })
+})
+
+app.delete("/api/task/:id",(req,res)=>{
+  const id = req.params.id
+  //console.log({params:req.params,id})
+  task.findByIdAndDelete(id).then((deletedtask)=>{
+    res.status(200).json({ok:true,data:deletedtask})
+  }).catch(()=>{
+    res.status(400).json({ok:false, message:"hubo un error al eliminar la tarea"})
+  })
+})
+
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
