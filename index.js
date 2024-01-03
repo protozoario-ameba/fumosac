@@ -59,6 +59,25 @@ app.use(express.static('public'))
 // Middleware para parsear body de la request (como en el caso c) 1
 
 
+app.post("/api/task",(req,res)=>{
+    const body = req.body
+    const id= req.params.id
+    //console.log({body})
+  task.create({
+//      task.findByIdAndUpdate( id,{
+      name: body.text,
+      done: false
+    })
+    .then((createtask)=>{
+    //  .then((updatetask)=>{
+      res.status(200).json({ok:true,message:"Tarea creada con exito",data:createtask})
+    })
+      .catch((err)=>{
+      res.status(400).json({ok:false,message:"Error al crear la tarea"})
+  })
+  })
+  
+
 //app.post("/api/task",(req,res)=>{
   app.put("/api/task/:id",(req,res)=>{
   const body = req.body

@@ -25,13 +25,14 @@ createEditbtn.addEventListener("click",function(){
   const path = creating ? "task" : `task/${TASK_TO_EDIT._id}`
   const method = creating ? "POST" : "PUT"
   fetch(`${baseBackendUrl}/${path}`,{
-    method,
+    method: method,
     headers: {"content-type":"Application/Json"},
     body: JSON.stringify({text: input.value})
 }).then((res)=>{
   //console.log({res})
   gettask()
   input.value = ""
+  createEditbtn.innerText = "Crear tarea"
   return res.json()
 }).then((resjson=>{
     console.log({resjson})
